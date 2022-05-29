@@ -1,0 +1,13 @@
+# ignore everything in root
+*
+*/
+*/gametime
+*/gametime-service
+
+# don't ignore these
+!/.gitignore
+!/.dockerignore
+!/docker-compose.yml
+!package.json
+!readme.md
+# ignore

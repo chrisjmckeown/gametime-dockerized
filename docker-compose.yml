@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  gametime:
+    tty: true
+    container_name: gametime
+    # build specifies where the Dockerfile is for gametime
+    build:
+      context: .
+      dockerfile: ./gametime/Dockerfile
+      target: gametime
+    ports:
+      - 8892:3000
+      # exposing the port (9229) for remote debugging
+      - 8893:9229
+    volumes:
+      # specifies path to code and mount point in container using bind mount
+      - ./gametime:/home/node/gametime
+    stdin_open: true
+    environment:
+      - REACT_APP_BASE_NAME=gametime
+    # command: npm run start # run this after to avoid the overhead of running npm i
+    command: yarn start # run this once to get a node_modules folder in your project dir,
+    # so that vscode does NOT complain with linter errors
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    # not specifying mount point on host. let docker manage the mount point to persist data
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - 3008:5432
