@@ -1,8 +1,5 @@
 # ignore everything in root
 *
-*/
-*/gametime
-*/gametime-service
 
 # don't ignore these
 !/.gitignore

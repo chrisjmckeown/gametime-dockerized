@@ -10,9 +10,9 @@ services:
       dockerfile: ./gametime/Dockerfile
       target: gametime
     ports:
-      - 8892:3000
+      - 7792:3000
       # exposing the port (9229) for remote debugging
-      - 8893:9229
+      - 7793:9229
     volumes:
       # specifies path to code and mount point in container using bind mount
       - ./gametime:/home/node/gametime
@@ -22,6 +22,17 @@ services:
     # command: npm run start # run this after to avoid the overhead of running npm i
     command: yarn start # run this once to get a node_modules folder in your project dir,
     # so that vscode does NOT complain with linter errors
+  gametime-service:
+    build:
+      context: .
+      dockerfile: ./gametime-service/Dockerfile
+    ports:
+      - 7790:3000
+      - 7791:9229
+    volumes:
+      - ./gametime-service:/home/node/gametime-service/
+    links:
+      - postgres
   postgres:
     image: postgres
     restart: always
